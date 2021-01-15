@@ -19,7 +19,7 @@ var crud = {
         // -- configurazioni widgets
         //... confs_widgets,
         // --- configurazioni views
-        ... confs_views,
+        //... confs_views,
         // -- configurazioni actions
         ... confs_actions,
         // -- configurazioni oggetti miscellaouns

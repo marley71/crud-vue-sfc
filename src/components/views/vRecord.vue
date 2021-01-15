@@ -5,6 +5,7 @@ import crud from "../../crud/confs";
 crud.conf['v-record'] = {
     //confParent: 'v-base',
     modelName: null,
+    widgetTemplate : 'tpl-record',
     pk: 0,
     value: {},
     metadata: {},

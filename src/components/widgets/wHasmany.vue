@@ -1,5 +1,5 @@
 <template>
-    <div class="portlet">
+    <div class="card border-gray-900">
         <div class="portlet-header border-bottom mb-1 " :class="bgClass">
             <span class="pull-left text-dark text-truncate font-weight-medium">{{ label | translate }}</span>&nbsp;
             <div class="pull-right">

@@ -1,8 +1,4 @@
 var confs_views = {
-    // 'v-hasmany' : {
-    //     confParent : 'v-collection',
-    //     defaultWidgetType : 'w-input',
-    // },
     'v-hasmany-view' : {
         confParent : 'v-collection',
         defaultWidgetType : 'w-text',

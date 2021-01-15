@@ -1,9 +1,9 @@
 <template>
-    <div class="input-group mb-3">
+    <div class="grid sm:grid-cols-3">
+        <input type="text" c-autocomplete class="form-control">
         <div class="input-group-prepend">
             <span class="input-group-text">{{ label }}</span>
         </div>
-        <input type="text" c-autocomplete class="form-control">
         <div class="input-group-append">
             <button type="button" class="btn btn-outline-secondary" v-on:click="clear">
                 <i class="fa fa-times"></i>

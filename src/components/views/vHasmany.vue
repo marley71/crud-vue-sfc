@@ -12,18 +12,13 @@ import vRecord from "./vRecord";
 import crud from "../../crud/confs";
 
 crud.conf['v-hasmany'] =  {
-    confParent : 'v-collection',
+    confParent : 'v-record',
     defaultWidgetType : 'w-input',
 };
 
 export default {
     name: "v-hasmany",
     extends: vRecord,
-    // props: {
-    //     cType: {
-    //         default: 'insert'
-    //     }
-    // },
     methods: {
         getFieldName: function (key) {
             var that = this;
