@@ -1,0 +1,36 @@
+<template>
+      <div id="app">
+<!--        <c-router c-content-id="crud-contents"></c-router>-->
+          <router-view></router-view>
+      </div>
+</template>
+
+<script>
+/* eslint-disable vue/no-unused-components */
+
+import cRouter from "./components/misc/cRouter";
+
+
+export default {
+  name: 'App',
+  components: {
+    cRouter
+    //HelloWorld,wInput
+  },
+    mounted() {
+        //this.$crud.EventBus.$emit('crud-app-loaded');
+        window.dispatchEvent(new Event('crud-app-loaded'))
+    }
+}
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
