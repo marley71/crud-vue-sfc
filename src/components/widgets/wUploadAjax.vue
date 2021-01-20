@@ -90,8 +90,8 @@ export default {
             that.change();
             if (that._validate()) {
                 that.sendAjax();
-            } else
-                that.onError();
+            }
+
         },
         sendAjax: function () {
             var that = this;
@@ -151,11 +151,13 @@ export default {
                 var refPreview = that._uid + 'preview';
                 //console.log('refPreview',refPreview,that.$crud.cRefs[refPreview])
                 that.$crud.cRefs[refPreview].value = data.result;
+                that.onSuccess();
             }).fail(function (data, error, msg) {
                 console.log("An error occurred, the files couldn't be sent!");
                 that.lastUpload = false;
                 that.error = true;
                 that.errorMessage = "Upload error " + data + " " + error + " " + msg;
+                that.onError();
             });
         },
     }

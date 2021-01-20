@@ -6,3 +6,6 @@ Vue.component('c-manage', cManage);
 
 import cPage from "./cPage";
 Vue.component('c-page', cPage);
+
+import cImport from "./cImport";
+Vue.component('c-import', cImport);
