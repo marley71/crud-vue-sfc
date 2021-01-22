@@ -9,3 +9,6 @@ Vue.component('c-page', cPage);
 
 import cImport from "./cImport";
 Vue.component('c-import', cImport);
+
+import cCalendar from "./cCalendar";
+Vue.component('c-calendar', cCalendar);

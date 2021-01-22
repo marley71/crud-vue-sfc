@@ -25,14 +25,12 @@ export default {
         'cModel': {
             default: null
         },
-        'cType': {
-            default: 'collection'
-        }
+        // 'cType': {
+        //     default: 'collection'
+        // }
     },
     mounted: function () {
-        var that = this;
-        // if (that.cModel)
-        //     that.conf.modelName = that.cModel;
+        let that = this;
         that.route = that._getRoute();
         that.setRouteValues(that.route);
         that.fetchData(that.route, function (json) {
@@ -320,8 +318,6 @@ export default {
                     }
                 );
             }
-            //var order_direction = (!that.orderDirection || that.orderDirection.toLowerCase() == 'desc')?'ASC':'DESC';
-            //console.log(that.orderField,order_direction);
             __sortOn(value, orderField, orderDirection);
             that.metadata.order = {
                 field: orderField,
@@ -336,18 +332,15 @@ export default {
                 that.loading = false;  //  per far in modo di autodisegnarsi di nuovo
                 that.reload();
             }, 100);
-            //that.$forceUpdate();
-            //this.loading = false;
-            //that.reload();
         },
 
-        getTranslate: function (key) {
-            var that = this;
-            if (!that.widgets.length)
-                return '';
-            return that.widgets[0][key].label;
-
-        }
+        // getTranslate: function (key) {
+        //     var that = this;
+        //     if (!that.widgets.length)
+        //         return '';
+        //     return that.widgets[0][key].label;
+        //
+        // }
     },
 }
 </script>

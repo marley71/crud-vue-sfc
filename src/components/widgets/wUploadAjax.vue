@@ -1,23 +1,23 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-8">
+        <div class="grid grid-cols-2">
+            <div>
                 <div v-show="error" class="text-red-800">{{ errorMessage }}</div>
                 <input type="hidden" v-model="value" :name="getFieldName()">
                 <div>
                     <div v-show="extensions">
-                        <span crud-label="app.accepted-extensions">Estensioni accettate: </span>
+                        <span >Estensioni accettate: </span>
                         <span v-show="extensions">{{ extensions.join(',') }}</span>
                     </div>
                     <div v-show="maxFileSize">
                         Dimensione massima: <span crud-label="app.upload-max-filesize">{{ maxFileSize }}</span>
                     </div>
-                    <div>
+                    <div class="m-2">
                         <input c-file class="" type="file" v-on:change="validate()"/>
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div>
                 <w-preview :c-conf="previewConf"></w-preview>
             </div>
         </div>

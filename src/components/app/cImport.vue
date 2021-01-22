@@ -2,7 +2,7 @@
     <div>
         <div class="alert alert-info" role="alert">
             <h4 class="alert-heading">Importazione csv</h4>
-            <p>Importazione modello <strong>{{cProviderName}}</strong> da file csv.</p>
+            <p>Importazione modello <strong>{{providerName}}</strong> da file csv.</p>
             <hr>
             <p class="mb-0">L'importazione avverrà in due fasi, la lettura del file csv e check degli errori e salvataggio del csv importato</p>
         </div>
@@ -14,9 +14,13 @@
         <div v-if="progressEnabled">
             <div v-if="status=='loading'">Loading</div>
             <div v-if="status=='saving'">Saving</div>
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped" :style="'width:'+progressValue+'%'"></div>
+            <div class="shadow w-full bg-grey-light">
+                <div class="bg-blue-500 text-xs leading-none py-1 text-center text-white" :style="'width:'+progressValue+'%'">{{progressValue}}%</div>
             </div>
+<!--            -->
+<!--            <div class="progress">-->
+<!--                <div class="progress-bar progress-bar-striped" :style="'width:'+progressValue+'%'"></div>-->
+<!--            </div>-->
         </div>
         <div v-if="saveEnabled">
             <div>File csv caricato e controllato</div>
@@ -88,6 +92,7 @@ crud.conf['c-import'] = {
     status : 'upload',
     confUpload : {
         name : 'resource',
+        template : 'tpl-no',
         type : 'w-upload-ajax',
         maxFileSize: "2M",
         modelName : null, //'cup_geo_nazioni_istat',

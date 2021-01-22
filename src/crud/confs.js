@@ -1,6 +1,6 @@
 import conf_routes from "./confs_routes";
 // import confs_widgets from "./confs_widgets";
-import confs_views from "./confs_views";
+//import confs_views from "./confs_views";
 import confs_actions from "./confs_actions";
 import confs_misc from "./confs_misc";
 
@@ -26,6 +26,39 @@ var crud = {
         ... confs_misc,
     },
     routes : conf_routes,
+}
+
+crud.mimetypes = {
+    // associazione mimetype del file con icona da visualizzare
+    icons : {
+        "default": 'fa fa-file-o',
+        "application/xls": 'fa fa-file-excel-o',
+        "xlsx": 'fa fa-file-excel-o',
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": 'fa fa-file-excel-o',
+        "zip": 'fa fa-file-archive-o',
+        "mp3": 'fa fa-audio-o',
+        "image/jpeg": "fa fa-image-o",
+        "application/pdf": "fa fa-file-pdf-o",
+        "txt": "fa fa-file-text-o",
+        "text/plain" : "fa fa-file-text-o",
+    },
+    // associazione mimetype del file con il tipo upload documento
+    docType : [
+        "application/xls",
+        "xlsx",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "zip",
+        "mp3",
+        "application/pdf",
+        "txt",
+        "csv",
+        "text/plain"
+    ],
+    // associazione mimetype del file con il tipo upload image
+    imageType : [
+        "image/jpeg",
+        "image/png"
+    ]
 }
 
 export default crud

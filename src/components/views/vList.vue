@@ -162,12 +162,6 @@ crud.conf['v-list'] = {
 export default {
     name: "v-list",
     extends: vCollection,
-    // props: {
-    //     'cType': {
-    //         default: 'list'
-    //     },
-    // },
-
     methods: {
 
         isOrderField: function (key) {

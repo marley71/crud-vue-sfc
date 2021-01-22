@@ -39,7 +39,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'collection',
         title : 'app.salva',
-        css: 'btn btn-primary btn-sm mr-1',
+        css: 'bg-green-500 text-white',
         icon : 'fa fa-save',
         text : 'app.salva',
         json : null,
