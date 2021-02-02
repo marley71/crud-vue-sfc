@@ -34,8 +34,9 @@
 
 
                 <div class="overflow-x-auto p-2 " :class="modelName">
-                    <table class="table-list table-auto w-full border rounded-lg">
-                        <thead>
+<!--                    <table class="table-list table-auto w-full border rounded-lg">-->
+                        <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
                         <tr v-if="widgets.length > 0">
                             <th v-if="needSelection" class="text-gray-500 w--50">
                                 <label class="">
@@ -62,7 +63,7 @@
                             </th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="bg-white divide-y divide-gray-200">
                         <!-- product -->
                         <tr v-for="(row,index) in widgets" :key="index">
                             <th v-if="needSelection">

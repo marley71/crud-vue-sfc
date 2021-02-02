@@ -90,6 +90,7 @@ crud.conf['c-import'] = {
     uploadEnabled : true,
     progressEnabled : false,
     status : 'upload',
+    timerStatus : null,
     confUpload : {
         name : 'resource',
         template : 'tpl-no',
@@ -178,6 +179,12 @@ export default {
         })
 
     },
+    beforeDestroy() {
+        var that = this;
+        console.log('BEFORE DESTROY',that.timerStatus);
+        if (that.timerStatus)
+            window.clearTimeout(that.timerStatus);
+    },
     methods : {
 
         dynamicData(conf) {
@@ -207,6 +214,7 @@ export default {
         },
         progress : function (json) {
             var that = this;
+
             var checkError = that.checkJobError(json);
 
             if (checkError.error ) {
@@ -232,8 +240,9 @@ export default {
                 console.log('job end 2',that.status,that.saveEnabled,that.uploadEnabled)
                 return ;
             }
-            setTimeout(that.checkStatus,
-                500)
+            console.log('check',that.timerStatus);
+            if (!that.timerStatus)
+                that.timerStatus = setInterval(that.checkStatus,2000)
         },
 
         checkJobError : function (json) {

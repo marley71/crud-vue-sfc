@@ -51,15 +51,15 @@ export default {
         }
     },
 
-    data: function () {
-        var that = this;
-        var d = {};
-        if (that.cModel)
-            d.modelName = that.cModel;
-        if (that.cPk)
-            d.pk = that.cPk;
-        return d;
-    },
+    // data: function () {
+    //     var that = this;
+    //     var d = {};
+    //     if (that.cModel)
+    //         d.modelName = that.cModel;
+    //     if (that.cPk)
+    //         d.pk = that.cPk;
+    //     return d;
+    // },
 
     methods: {
         dynamicData: function (conf) {

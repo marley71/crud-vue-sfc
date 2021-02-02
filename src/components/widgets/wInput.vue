@@ -1,5 +1,5 @@
 <template>
-  <input class="form-control" :type="inputType" v-model="value" :name="getFieldName()" :change="change">
+  <input class="form-control rounded w-full" :type="inputType" v-model="value" :name="getFieldName()" :change="change">
 </template>
 
 <script>

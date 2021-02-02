@@ -5,7 +5,7 @@
             </div>
         </div>
         <div class="fixed z-30 top-0 left-0 min-h-screen min-w-full flex items-center justify-center">
-            <div class="relative bg-white rounded shadow p-8 m-4  max-h-full text-center overflow-y-scroll opacity-100 z-20" :class="typeSize">
+            <div class="relative bg-white rounded shadow p-8 m-4  max-h-full text-center opacity-100 z-20" :class="typeSize">
                 <div class="mb-4 border-b text-2xl font-medium border-teal-600">
                   {{ title | translate }}
                 </div>
@@ -16,7 +16,7 @@
                     <div v-else class="text-black-50">{{message}}</div>
                 </div>
                 <div class="">
-                    <button type="button" class="text-black-50 py-2 px-4 rounded bg-red-600  hover:bg-red-800"  v-on:click="ok">{{ 'app.ok' | translate}}</button>
+                    <button type="button" class="text-black-50 py-2 px-4 rounded bg-blue-600  hover:bg-blue-800"  v-on:click="ok">{{ 'app.ok' | translate}}</button>
                 </div>
             </div>
         </div>

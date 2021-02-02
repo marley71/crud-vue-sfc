@@ -455,7 +455,7 @@ export default {
             //var _as = editConf.customActions['action-save'] || {};
             editConf = thisManage.mergeConfView(editConf, {
                 customActions: {
-                    'action-save-back': thisManage.merge(_asb,thisManage._actionSaveBack()),
+                    'action-save-back': thisManage.merge(thisManage._actionSaveBack(),_asb),
                     'action-back': thisManage._actionBack(),
                     //'action-save' : thisManage.merge(_as,)
                 }
@@ -478,7 +478,7 @@ export default {
             var _asb = insertConf.customActions['action-save-back'] || {};
             insertConf = thisManage.mergeConfView(insertConf, {
                 customActions: {
-                    'action-save-back': thisManage.merge(_asb,thisManage._actionSaveBack()),
+                    'action-save-back': thisManage.merge(thisManage._actionSaveBack(),_asb),
                     'action-back': thisManage._actionBack()
                 }
             });

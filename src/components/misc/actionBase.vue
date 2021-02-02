@@ -1,12 +1,12 @@
 <template>
     <button v-if="controlType=='button'" type="button" v-show="_visible" class="
                 inline-block text-center text-sm leading-1 px-2 py-1
-                border border-gray-500 text-gray-500
+                border border-gray-500 rounded
                 shadow-md hover:text-white hover:bg-gray-500"
 
             :title="title | translate" :class="css" v-on:click="_execute" v-bind:disabled="_disabled">
-        <i class="m-1" v-show="icon" :class="icon"></i>
-        <span>{{ text | translate }}</span>
+        <i class="m-1 align-middle" v-show="icon" :class="icon"></i>
+        <span class="align-middle">{{ text | translate }}</span>
     </button>
     <a v-else class="btn btn-sm btn-pill px-2 py-1 fs--15" :target="target" :href="href" v-show="_visible"
        :title="title | translate" :class="css" :disabled="_disabled">
@@ -26,7 +26,7 @@ crud.conf['action-base'] = {
     visible: true,
     enabled: true,
     title: '',
-    css: 'btn btn-outline-secondary',
+    css: 'btn btn-outline-secondary text-gray-500',
     icon: '',
     text: '',
     controlType: 'button',

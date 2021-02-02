@@ -19,7 +19,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'collection',
         title : 'app.cerca',
-        css: 'btn btn-primary btn-sm btn-group mr-1',
+        css: 'btn btn-primary btn-sm btn-group mr-1 bg-blue-300',
         icon : 'fa fa-search',
         text : 'app.cerca',
         execute : function () {
@@ -224,7 +224,7 @@ var confs_actions = {
         visible : true,
         enabled : true,
         title : 'app.nuovo',
-        css: 'btn btn-outline-primary btn-sm btn-group mr-1',
+        css: 'btn btn-outline-primary btn-sm btn-group mr-1 bg-red-400',
         icon : 'fa fa-plus',
         text : 'app.nuovo',
         execute  :function () {

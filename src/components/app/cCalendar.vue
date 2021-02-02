@@ -24,13 +24,13 @@ crud.conf['c-calendar'] = {
     confParent: 'v-list',
     routeName : 'calendar',
     resources : [
+        "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.css",
+        "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.js",
         //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.min.css",
         //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.js",
         //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.print.min.css",
         //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/gcal.min.js",
-        "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.css",
-        "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js",
-        "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.js",
         // 'fullcalendar-3.8.0/fullcalendar.css',
         // 'fullcalendar-3.8.0/lib/moment.min.js',
         // 'fullcalendar-3.8.0/fullcalendar.js'
@@ -49,23 +49,11 @@ crud.routes['calendar'] = {
     params: {},
 }
 
+// TODO inserire la gestione di avanti e indietro del calendario con il caricamento dei dati
+
 export default {
     name: "c-calendar",
     extends : vList,
-    // mounted() {
-    //     var that = this;
-    //     var __makeCalendar=function () {
-    //         if (that.resourcesLoaded) {
-    //             console.log('CALENDAR CONTAINER',that.jQe().find('[crud-calendar]').length);
-    //             that.jQe().find('[crud-calendar]').fullCalendar(that.calendarOptions);
-    //             that.calendarContainer = that.jQe().find('[crud-calendar]');
-    //             that.loadEvents();
-    //         } else {
-    //             setTimeout(__makeCalendar,100)
-    //         }
-    //     }
-    //     __makeCalendar();
-    // },
     methods : {
         afterLoadResources() {
             var that = this;
@@ -127,7 +115,7 @@ export default {
                 }
                 //if (!parseInt(model.data.attivo))
                 //  bgcolor = 'red';
-                if (!value[that.data_inizio]) {
+                if (!value[that.dateField]) {
                     console.warn('data evento non valida. Scartato:', value);
                     continue;
 
@@ -135,25 +123,76 @@ export default {
                 var ev = {
                     id: value[that.id] ? model.data[that.id] : value.id,
                     title: title,
-                    start: value[that.data_inizio],
+                    start: value[that.dateField],
                     end: value[that.data_fine] ? value[that.data_fine] : null,
                     backgroundColor: backgroundColor,
                     textColor: textColor,
                     jsondata : value,
                 };
-                //that.log.info(value,'evento ',ev);
+                //console.info(value,'evento ',ev);
                 events.push(ev);
 
             }
-            console.info('aggiunti eventi ', events);
+            //console.info('aggiunti eventi ', events);
             that.jQe().find('[crud-calendar]').fullCalendar('addEventSource', events);
         },
 
         dayClick: function (date, jsEvent, view) {
             console.log('dayClick',date, jsEvent, view);
+            var that = this;
+            var modalObj = null;
+            // prima provo se ha l'edit poi l'insert
+            var defaultConf = window['Model'+this.pascalCase(that.modelName)].insert;
+            if (!defaultConf)
+                defaultConf = window['Model'+this.pascalCase(that.modelName)].edit || {};
+
+            defaultConf = that.mergeConfView({},defaultConf);
+            defaultConf.routeName = 'insert';
+
+            // TODO settare il campo data con il giorno attuale del calendario.
+            var cConf = {
+                modelName : that.modelName,
+                actions : ['action-save'],
+                customActions : {
+                    'action-save' : {
+                        afterExecute() {
+                            that.reload();
+                            // se vogliamo chiudere la popup subito dopo il salvataggio
+                            modalObj.hide();
+                        }
+                    }
+                }
+            };
+            cConf = that.mergeConfView(defaultConf,cConf);
+            console.log('viewConf',cConf);
+            modalObj = that.createModalView('v-insert',cConf,"Inserimento");
         },
         eventClick: function (calEvent, jsEvent, view) {
-            console.log('eventClick');
+            console.log('eventClick ',calEvent.id);
+            var that = this;
+            var id = calEvent.id;
+            var modalObj = null;
+            var defaultConf = {};
+            try {
+                defaultConf = window['Model'+this.pascalCase(that.modelName)].edit;
+            } catch (e) {};
+            var cConf = {
+                modelName : that.modelName,
+                pk : id,
+                actions : ['action-save'],
+                customActions : {
+                    'action-save' : {
+                        afterExecute() {
+                            that.reload();
+                            // se vogliamo chiudere la popup subito dopo il salvataggio
+                            modalObj.hide();
+                        }
+                    }
+                }
+            };
+            cConf = that.mergeConfView(defaultConf,cConf);
+            console.log('viewConf',cConf);
+            modalObj = that.createModalView('v-edit',cConf,"Modifica");
         }
     },
 }

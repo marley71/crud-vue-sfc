@@ -88,15 +88,15 @@ export default {
             //     hash = '#'+that.defaultCommand
             // }
 
-            that.doCmd(hash);
-            that.lastHash = hash;
-            var path = that.getCmdPath(hash);
-            let eventParams = {
-                path: path,
-                hash: hash
-            }
-            that.$crud.EventBus.$emit('set-path', eventParams);
-            that._updateLinks(window.location.hash);
+            // that.doCmd(hash);
+            // that.lastHash = hash;
+            // var path = that.getCmdPath(hash);
+            // let eventParams = {
+            //     path: path,
+            //     hash: hash
+            // }
+            // that.$crud.EventBus.$emit('set-path', eventParams);
+            // that._updateLinks(window.location.hash);
         },
         getCmdPath: function (cmd) {
             if (!cmd)
@@ -136,46 +136,6 @@ export default {
             }
             return;
         },
-        // _loadPage: function (params) {
-        //     var that = this;
-        //     if (that.lastComponent)
-        //         that.lastComponent.$destroy();
-        //
-        //     var route = that.createRoute('pages');
-        //     var path = params['path'].replaceAll('/', '.');
-        //     route.setValues({
-        //         path: path
-        //     })
-        //     delete params['path'];
-        //     route.setParams(params);
-        //     Server.route(route, function (html) {
-        //         if (html.error) {
-        //             that.errorDialog(html.msg);
-        //             return;
-        //         }
-        //         var htmlNode = jQuery('<div>' + html + '</div>');
-        //         jQuery.each(htmlNode.find('script'), function () {
-        //             //console.log('script',jQuery(this).text());
-        //             jQuery('body').append(jQuery(this));
-        //             jQuery(this).remove();
-        //         })
-        //
-        //         //console.log('html', htmlNode.html());
-        //         var cdef = Vue.component('async-comp', {
-        //             extends: that.$options.components['c-component'],
-        //             template: htmlNode.html()
-        //         });
-        //
-        //         var id = 'd' + (new Date().getTime());
-        //
-        //         jQuery('#' + that.contentId).html('<div id="' + id + '" ></div>');
-        //         //console.log('componente container length id ' + id,jQuery('#' + id).length);
-        //         var componente = new cdef();
-        //         componente.$mount('#' + id);
-        //         that.lastComponent = componente;
-        //
-        //     })
-        // },
 
         _loadModal: function (modalType, params) {
             var that = this;
