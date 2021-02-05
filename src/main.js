@@ -40,7 +40,56 @@ Vue.filter('translate', function (value,context,plural,params) {
 //window.crud = crud;
 window.app = new Vue({
     mounted() {
+        var that = this;
         console.log('main query',process.env);
+        var settings = [process.env.TRASLATIONS_FILES,process.env.ROUTES_FILES,process.env.CONFS_FILES];
+
+        var _recursive = function (sindex,files,findex,callback) {
+            that.loadResource(files[findex],function () {
+                console.log('_recursive',sindex,files[findex]);
+                let conf,lang,routes;
+                switch (sindex) {
+                    case 0:
+                        that.$crud.lang = that.merge(that.$crud.lang,lang);
+                        break;
+                    case 1:
+                        that.$crud.routes = that.merge(that.$crud.routes,routes);
+                        break;
+                    case 2:
+                        that.$crud.conf = that.merge(that.$crud.conf,conf);
+                        break;
+                    default:
+                        console.log('onno trovato',sindex);
+                }
+
+                if (findex < files.length-1) {
+                    _recursive(sindex,files,findex+1,callback);
+                } else {
+                    return callback();
+                }
+            });
+        }
+
+
+        var _settingsRecursive = function (i) {
+            if (settings[i]) {
+                var files = settings[i].split(',');
+                _recursive(i, files, 0, function () {
+                    if (i < settings.length - 1) {
+                        _settingsRecursive(i + 1);
+                    } else {
+                        window.dispatchEvent(new Event('crud-app-loaded'))
+                    }
+                });
+            } else {
+                if (i < settings.length - 1) {
+                    _settingsRecursive(i + 1);
+                } else {
+                    window.dispatchEvent(new Event('crud-app-loaded'))
+                }
+            }
+        }
+        _settingsRecursive(0);
     },
     mixins : [core_mixin,dialogs_mixin],
     render: h => h(App),

@@ -14,14 +14,24 @@ import cRouter from "./components/misc/cRouter";
 
 
 export default {
-  name: 'App',
-  components: {
-    cRouter
-    //HelloWorld,wInput
-  },
+    name: 'App',
+    components: {
+        cRouter
+        //HelloWorld,wInput
+    },
     mounted() {
         //this.$crud.EventBus.$emit('crud-app-loaded');
-        window.dispatchEvent(new Event('crud-app-loaded'))
+        //console.log('process.env.TRASLATIONS_FILES',process.env.TRASLATIONS_FILES)
+        // if (process.env.TRASLATIONS_FILES) {
+        //     this.loadResource(process.env.TRASLATIONS_FILES,function () {
+        //         window.dispatchEvent(new Event('crud-app-loaded'))
+        //     })
+        //     console.log('process.env.TRASLATIONS_FILES',process.env.TRASLATIONS_FILES)
+        //     //that.loadResource()
+        // } else
+        //     window.dispatchEvent(new Event('crud-app-loaded'))
+
+
     }
 }
 </script>
