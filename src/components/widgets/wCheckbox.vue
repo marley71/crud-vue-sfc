@@ -1,11 +1,10 @@
 <template>
-    <div
-        class="col-12 mb-2 form-label-group form-control bw--1 border-solid border-gray-400 p--6 rounded form-check-inline">
-        <div class="inline-block" v-for="key in domainValuesOrder">
-            <input class="form-check-input" v-bind:name="getFieldName()" type="checkbox" :value="key"
+    <div class="flex flex-row" :class="inline?'flex-row':'flex-col'">
+        <div class="mb-3 p-1" v-for="key in domainValuesOrder">
+            <input class="" v-bind:name="getFieldName()" type="checkbox" :value="key"
                    v-model="value"
                    v-on:change="change">
-            <label class="form-check-label"><span v-html="domainValues[key]"></span></label>
+            <label class=""><span v-html="domainValues[key]"></span></label>
         </div>
     </div>
 </template>
@@ -16,6 +15,7 @@ import choice_mixin from "../../mixins/choice_mixin";
 import crud from "../../crud/confs";
 
 crud.conf['w-checkbox'] = {
+    inline : true,
     domainValues: {},
     domainValuesOrder: [],
     value: [],

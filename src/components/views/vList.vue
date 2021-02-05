@@ -17,7 +17,7 @@
                     </div>
                     <div class="flex w-full md:w-1/2 justify-center h-8" v-show="collectionActionsName.length">
                         <template v-for="name in collectionActionsName">
-                            <component v-bind:is="name" v-bind:c-conf="collectionActions[name]"></component>
+                            <component v-bind:is="name" v-bind:c-conf="collectionActions[name]"></component>&nbsp;
                         </template>
                     </div>
 
@@ -34,9 +34,9 @@
 
 
                 <div class="overflow-x-auto p-2 " :class="modelName">
-<!--                    <table class="table-list table-auto w-full border rounded-lg">-->
-                        <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+                    <!--                    <table class="table-list table-auto w-full border rounded-lg">-->
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-100">
                         <tr v-if="widgets.length > 0">
                             <th v-if="needSelection" class="text-gray-500 w--50">
                                 <label class="">
@@ -151,13 +151,13 @@ crud.conf['v-list'] = {
 
     // vecchia conf.list rimossa e messa qui
     // confParent : 'v-list',
-    primaryKey : 'id',
-    routeName : 'list',
+    primaryKey: 'id',
+    routeName: 'list',
     customActions: {},
-    fieldsConfig : {},
+    fieldsConfig: {},
     orderFields: {},
-    widgetTemplate : 'tpl-list',
-    actions : ['action-insert','action-delete-selected','action-view','action-edit','action-delete']
+    widgetTemplate: 'tpl-list',
+    actions: ['action-insert', 'action-delete-selected', 'action-view', 'action-edit', 'action-delete']
 };
 
 export default {
@@ -245,5 +245,21 @@ export default {
 </script>
 
 <style scoped>
+div[role=group] > button:first-child {
+    /*border: 2px solid red;*/
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
 
+div[role=group] > button:last-child {
+    /*border: 2px solid red;*/
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-left: none;
+}
+
+div[role=group] > button:not(:first-child):not(:last-child) {
+    /*border: 2px solid red;*/
+    border-left: none;
+}
 </style>

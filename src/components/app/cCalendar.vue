@@ -23,6 +23,8 @@ import Server from "../../crud/Server"
 crud.conf['c-calendar'] = {
     confParent: 'v-list',
     routeName : 'calendar',
+    dateField : 'data',
+    dateEndField : 'data_fine',
     resources : [
         "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.css",
         "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js",
@@ -36,7 +38,8 @@ crud.conf['c-calendar'] = {
         // 'fullcalendar-3.8.0/fullcalendar.js'
     ],
     calendarOptions : {
-    }
+    },
+    calendarContainer : null,
 }
 
 crud.routes['calendar'] = {
@@ -55,10 +58,36 @@ export default {
     name: "c-calendar",
     extends : vList,
     methods : {
+        setRouteValues() {
+            var that = this;
+            if (route) {
+                route.setValues({
+                    modelName: that.modelName
+                });
+                // setto il filtro data.
+                if (that.calendarContainer) {
+                   console.log(that.calendarContainer.fullCalendar('getView').intervalStart)
+
+                    //that.calendarContainer.fullCalendar('getView').intervalEnd
+                }
+                // console.log('setRouteValues', that);
+                // if (that.routeConf) {
+                //     var _conf = that._loadRouteConf() || {};
+                //     console.log('routeConf params', _conf);
+                //     var params = route.getParams();
+                //     var p2 = _conf.params || {};
+                //     for (var k in p2) {
+                //         params[k] = p2[k];
+                //     }
+                //     route.setParams(params);
+                // }
+            }
+            return route;
+        },
         afterLoadResources() {
             var that = this;
+            //aspetto che i dati siano caricari
             var __makeCalendar=function () {
-                //aspetto che i dati siano caricari
                 if (!that.loading) {
                     console.log('CALENDAR CONTAINER',that.jQe().find('[crud-calendar]').length);
                     that.calendarOptions.dayClick= function (date, jsEvent, view){
@@ -68,8 +97,24 @@ export default {
                         that.eventClick(calEvent, jsEvent, view);
                     }
 
+                    that.calendarOptions.eventAfterAllRender = function (view) {
+                        alert('aa')
+                    }
+
                     that.jQe().find('[crud-calendar]').fullCalendar(that.calendarOptions);
                     that.calendarContainer = that.jQe().find('[crud-calendar]');
+
+                    that.calendarContainer.find('.fc-next-button').click(function(){
+                        alert('aa');
+                        that.reload();
+                        //var month = $('#calendar').fullCalendar('getView').intervalStart.format('MM');
+
+                        //var year = $('#calendar').fullCalendar('getView').intervalEnd.format('YYYY');
+
+                    });
+
+
+
                     that.loadEvents();
                 } else {
                     setTimeout(__makeCalendar,100)

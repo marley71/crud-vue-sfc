@@ -1,19 +1,17 @@
 <template>
     <c-loading v-if="loading" :error-msg="errorMsg"></c-loading>
-    <div v-else class="container-fluid">
+    <div v-else class="bg-white p-4 rounded">
         <slot card-title><h4 v-show="viewTitle">{{ viewTitle }}</h4></slot>
-        <c-loading v-if="loading" :error-msg="errorMsg"></c-loading>
-        <div class="row" v-else>
-            <v-widget v-for="(widget, key) in widgets" :c-widget="widget" v-if="!isHiddenField(key)"
-                      :key="key"></v-widget>
-        </div>
-        <!-- campi nascosti -->
         <template v-for="(widget, key) in widgets" v-if="isHiddenField(key)">
             <v-widget :c-widget="widget" :key="key"></v-widget>
         </template>
-        <div v-if="actions.length">
+        <div class="row">
+            <v-widget v-for="(widget, key) in widgets" :c-widget="widget" v-if="!isHiddenField(key)" :key="key"></v-widget>
+        </div>
+        <div v-html="beforeActions"></div>
+        <div class="clear-both mt-5" v-show="actions.length">
             <template v-for="(action,name) in actionsConf">
-                <v-action :c-action="action"></v-action>
+                <v-action :c-action="action"></v-action>&nbsp;
             </template>
         </div>
     </div>
@@ -27,6 +25,7 @@ import crud from "../../crud/confs";
 crud.conf['v-view'] = {
     confParent: 'v-record',
     defaultWidgetType: 'w-text',
+    beforeActions : null,
     primaryKey : 'id',
     routeName : 'view',
     fieldsConfig : {},

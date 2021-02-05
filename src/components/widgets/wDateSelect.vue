@@ -1,5 +1,5 @@
 <template>
-    <div v-if="resourcesLoaded" class="grid grid-cols-3">
+    <div v-if="resourcesLoaded" class="mb-3 pt-0 flex flex-row">
         <input type="hidden" v-model="value" v-bind:name="getFieldName()" v-on:change="change">
         <w-select ref="day" v-bind:c-conf="cDay"></w-select>
         <w-select ref="month" v-bind:c-conf="cMonth"></w-select>

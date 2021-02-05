@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="fixed z-30 top-0 left-0 min-h-screen min-w-full flex items-center justify-center">
-            <div class="relative bg-white rounded shadow p-8 m-4  max-h-full text-center opacity-100 z-20" :class="typeSize">
+            <div class="relative bg-white rounded shadow p-8 m-4  max-h-full opacity-100 z-20" :class="typeSize">
                 <div class="clear-both mb-10 border-b text-2xl font-medium border-teal-600">
                     <span class="float-left">{{ title | translate }}</span>
                     <span class="float-right" v-on:click="hide">
@@ -83,7 +83,7 @@ export default {
     methods : {
         dynamicData(conf) {
             if (!conf.title) {
-                conf.title = 'app.sitename';
+                conf.title = 'app.nome-app';
             }
             return conf;
         }

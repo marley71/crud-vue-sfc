@@ -74,7 +74,8 @@ var conf_routes = {
     },
     delete: {
         method: "post",
-        url: '/foorm/{modelName}/{pk}',
+        //url: '/foorm/{modelName}/{pk}',
+        url : '/foormaction/delete/{modelName}/list',
         resultType: 'record',
         protocol: 'record',
         type: 'delete',

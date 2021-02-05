@@ -5,7 +5,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'collection',
         title : 'app.reset',
-        css: 'btn btn-primary btn-sm btn-group mr-1',
+        css: 'rounded',
         text : 'app.reset',
         execute : function () {
             if (this.view) {
@@ -19,7 +19,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'collection',
         title : 'app.cerca',
-        css: 'btn btn-primary btn-sm btn-group mr-1 bg-blue-300',
+        css: 'bg-blue-300 rounded',
         icon : 'fa fa-search',
         text : 'app.cerca',
         execute : function () {
@@ -39,7 +39,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'collection',
         title : 'app.salva',
-        css: 'bg-green-500 text-white',
+        css: 'bg-green-500 text-white rounded',
         icon : 'fa fa-save',
         text : 'app.salva',
         json : null,
@@ -86,7 +86,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'record',
         title : 'app.modifica',
-        css: 'btn btn-outline-secondary btn-sm',
+        css: '',
         text : '',
         icon : 'fa fa-edit',
         execute : function () {
@@ -98,7 +98,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'record',
         title : 'app.vista',
-        css: 'btn btn-outline-secondary btn-sm ',
+        css: '',
         icon : 'fa fa-eye',
         text : '',
         execute : function () {
@@ -110,20 +110,29 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'record',
         title : 'app.cancella',
-        css: 'btn btn-outline-danger btn-sm ',
+        css: 'bg-red-100',
         icon : 'fa fa-times',
         text : '',
         setRouteValues : function(route) {
             var that = this;
+
             route.setValues({
-                modelName: that.view.modelName,
-                pk : that.modelData[that.view.primaryKey]
+                modelName: that.view.modelName
+            });
+            route.setParams({
+                id : that.modelData[that.view.primaryKey]
             });
             return route;
+            //
+            // route.setValues({
+            //     modelName: that.view.modelName,
+            //     pk : that.modelData[that.view.primaryKey]
+            // });
+            // return route;
         },
         execute : function () {
             var that = this;
-            that.confirmDialog('app.conferma-cancellazione' ,{
+            var dlg = that.confirmDialog(that.translate('app.conferma-cancellazione') ,{
                 ok : function () {
                     var r = that.createRoute('delete');
                     that.setRouteValues(r);
@@ -135,6 +144,7 @@ var confs_actions = {
                         var msg = json.msg?json.msg:that.translate('app.cancellazione-successo');
                         that.alertSuccess(msg);
                         that.view.reload();
+                        dlg.hide();
                     });
                 }
             });
@@ -144,7 +154,7 @@ var confs_actions = {
         confParent : 'action-base',
         type: 'record',
         title: 'app.salva',
-        css: 'btn btn-outline-success btn-sm ',
+        css: '',
         text: '',
         icon: 'fa fa-save',
         visible: false,
@@ -190,6 +200,7 @@ var confs_actions = {
                 if (that.$crud.cRefs[sref])
                     values[k] = that.$crud.cRefs[sref].getValue();
             }
+            console.log('rowData values',values);
             return values;
         }
     },
@@ -197,7 +208,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'record',
         title : 'app.modifica',
-        css: 'btn btn-outline-secondary btn-sm ',
+        css: '',
         text : '',
         icon : 'fa fa-edit',
         execute : function () {
@@ -209,7 +220,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'record',
         title : 'app.annulla',
-        css: 'btn btn-outline-secondary btn-sm ',
+        css: '',
         //text : 'back',
         icon : 'fa fa-arrow-left',
         visible : false,
@@ -224,7 +235,7 @@ var confs_actions = {
         visible : true,
         enabled : true,
         title : 'app.nuovo',
-        css: 'btn btn-outline-primary btn-sm btn-group mr-1 bg-red-400',
+        css: 'bg-green-100 rounded ',
         icon : 'fa fa-plus',
         text : 'app.nuovo',
         execute  :function () {
@@ -236,7 +247,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'collection',
         title : 'app.indietro',
-        css: 'btn btn-secondary btn-sm mr-1',
+        css: 'rounded',
         icon : 'fa fa-backward',
         text : 'app.indietro',
         execute : function () {
@@ -247,7 +258,7 @@ var confs_actions = {
         confParent : 'action-base',
         type : 'collection',
         title : 'app.cancella-selezionati',
-        css: 'btn btn-outline-danger btn-sm mr-1',
+        css: 'bg-red-100 rounded',
         icon : 'fa fa-trash',
         text : '',
         needSelection : true,

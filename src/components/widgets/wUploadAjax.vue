@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <div class="grid grid-cols-2">
-            <div>
+    <div class="w-full">
+        <div class="flex flex-row">
+            <div >
                 <div v-show="error" class="text-red-800">{{ errorMessage }}</div>
                 <input type="hidden" v-model="value" :name="getFieldName()">
                 <div>
@@ -43,17 +43,19 @@ crud.conf['w-upload-ajax'] = {
 export default {
     name: "w-upload-ajax",
     extends: wBase,
-    mounted: function () {
-        if (this.value instanceof String)
-            this.value = JSON.stringify(this.value).replace(/\\"/g, '"');
-        else if (!this.value)
-            this.value = {};
-        console.log('w-ulpload ajax', this.value);
-    },
+    // mounted: function () {
+    //
+    //     console.log('w-ulpload ajax', this.value);
+    // },
 
     methods: {
 
         dynamicData(conf) {
+            if (conf.value instanceof String)
+                conf.value = JSON.stringify(this.value).replace(/\\"/g, '"');
+            else if (!this.value)
+                conf.value = {};
+
             conf.previewConf = {
                 value: conf.value,
                 cRef: this._uid + 'preview'
@@ -91,6 +93,12 @@ export default {
             if (that._validate()) {
                 that.sendAjax();
             }
+
+        },
+        onSuccess() {
+
+        },
+        onError() {
 
         },
         sendAjax: function () {

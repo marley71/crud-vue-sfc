@@ -1,6 +1,7 @@
 <template>
     <c-loading v-if="loading" :error-msg="errorMsg"></c-loading>
-    <div v-else>
+    <div v-else class="bg-white p-4 rounded">
+        <slot card-title><h4 v-show="viewTitle">{{ viewTitle }}</h4></slot>
         <div v-html="beforeForm"></div>
         <form enctype="multipart/form-data">
             <!-- campi nascosti -->
@@ -12,9 +13,9 @@
             </div>
         </form>
         <div v-html="beforeActions"></div>
-        <div class="clear-both" v-show="actions.length">
+        <div class="clear-both mt-5" v-show="actions.length">
             <template v-for="(action,name) in actionsConf">
-                <v-action :c-action="action"></v-action>
+                <v-action :c-action="action"></v-action>&nbsp;
             </template>
         </div>
     </div>
@@ -29,17 +30,15 @@ crud.conf['v-edit'] = {
     confParent : 'v-record',
     beforeForm : null,
     beforeActions : null,
-    // vecchia configurazione in base al tipo, eliminata
-    //confParent : 'v-edit',
     primaryKey : 'id',
     routeName : 'edit',
+    widgetTemplate : 'tpl-record',
+    actions : ['action-save','action-back'],
     customActions : {},
     fieldsConfig : {
         id : 'w-hidden'
     },
     fields : [],
-    widgetTemplate : 'tpl-record',
-    actions : ['action-save','action-back']
 };
 
 export default {

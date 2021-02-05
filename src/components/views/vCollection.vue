@@ -128,8 +128,8 @@ export default {
                     dconf.modelData = value[i];
                     // if (! ('value' in dconf))
                     //     dconf.value = null;
-                    if (value[i][key])
-                        dconf.value = value[i][key];
+                    //if (value[i][key])
+                    dconf.value = value[i][key];
                     dconf.name = that.getFieldName(key);
                     if (!('label' in dconf)) {
                         dconf.label = key;

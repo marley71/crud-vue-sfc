@@ -1,8 +1,8 @@
 <template>
-    <div class="input-group">
+    <div class="mb-3 pt-0">
         <input type="hidden" v-model="value" v-bind:name="getFieldName()"
                v-on:change="change">
-        <input c-picker>
+        <input class="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full" c-picker>
     </div>
 </template>
 

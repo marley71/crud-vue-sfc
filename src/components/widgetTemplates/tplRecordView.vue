@@ -1,10 +1,19 @@
 <template>
+<!--    <component v-if="cWidget.type=='w-hidden'" :is="cWidget.type" :c-conf="cWidget"></component>-->
+<!--    <div class="w-full mb-2 relative" v-else>-->
+<!--        <component :is="cWidget.type" :c-conf="cWidget"></component>-->
+<!--        <label :for="cWidget.name" class="form-label">-->
+<!--            {{cWidget.label}}-->
+<!--        </label>-->
+<!--    </div>-->
     <component v-if="cWidget.type=='w-hidden'" :is="cWidget.type" :c-conf="cWidget"></component>
-    <div class="w-full mb-2 relative" v-else>
-        <component :is="cWidget.type" :c-conf="cWidget"></component>
-        <label :for="cWidget.name" class="form-label">
+    <div class="inline-grid grid-cols-2 gap-x-3 w-full border-1 border-gray-500" v-else>
+        <span>
             {{cWidget.label}}
-        </label>
+        </span>
+        <span>
+            <component :is="cWidget.type" :c-conf="cWidget"></component>
+        </span>
     </div>
 </template>
 

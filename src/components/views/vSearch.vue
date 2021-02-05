@@ -1,10 +1,13 @@
 <template>
-    <div class="mb-4 border-b border-red-600" v-if="(widgets && Object.keys(widgets).length > 0)">
-        <c-loading v-if="loading" :error-msg="errorMsg"></c-loading>
-        <form class="bg-white z-1" :class="'form-'+modelName" v-else>
+    <c-loading v-if="loading" :error-msg="errorMsg"></c-loading>
+    <div v-else class="bg-white p-4 rounded">
+        <slot card-title><h4 v-show="viewTitle">{{ viewTitle }}</h4></slot>
+        <div v-html="beforeForm"></div>
+        <form class="bg-white z-1" :class="'form-'+modelName">
             <!-- campi nascosti -->
-            <v-widget v-for="(widget, key) in widgets" v-if="isHiddenField(key)" :c-widget="widget"
-                      :key="key"></v-widget>
+            <template v-for="(widget, key) in widgets" v-if="isHiddenField(key)">
+                <v-widget :c-widget="widget" :key="key"></v-widget>
+            </template>
             <div class="flex flex-col">
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
                     <div class="mx-1" :class="key.replace('|','-')" v-for="(widget, key) in widgets">
@@ -19,7 +22,6 @@
                     </div>
                 </div>
             </div>
-
         </form>
     </div>
 </template>
@@ -31,6 +33,8 @@ import crud from "../../crud/confs";
 
 crud.conf['v-search'] = {
     confParent: 'v-record',
+    beforeForm : null,
+    beforeActions : null,
     primaryKey : 'id',
     routeName : 'search',
     actions : ['action-search','action-reset'],

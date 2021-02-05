@@ -32,7 +32,7 @@
                 <div class="collapse show" c-collapse-list v-show="showList">
                     <div >
                         <div >
-                            <div c-search-container>
+                            <div c-search-container class="border-b border-red-600">
                             </div>
                             <div c-list-container>
 
