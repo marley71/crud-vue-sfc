@@ -32,15 +32,15 @@ export default {
             default: 0,
         }
     },
-    mounted: function () {
-        var that = this;
-        that.route = that._getRoute();
-        that.setRouteValues(that.route);
-        that.fetchData(that.route, function (json) {
-            that.fillData(that.route, json);
-            that.draw();
-        });
-    },
+    // mounted: function () {
+    //     var that = this;
+    //     that.route = that._getRoute();
+    //     that.setRouteValues(that.route);
+    //     that.fetchData(that.route, function (json) {
+    //         that.fillData(that.route, json);
+    //         that.draw();
+    //     });
+    // },
 
     beforeDestroy() {
         for (var key in this.widgets) {

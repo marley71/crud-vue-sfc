@@ -8,6 +8,7 @@ crud.conf['w-base'] = {
     value: null,
     defaultValue: null,
     label: null,
+    view : null, // riferimento alla view
 };
 
 export default {

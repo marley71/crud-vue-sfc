@@ -12,6 +12,7 @@ import 'tailwindcss/base.css';
 import 'tailwindcss/components.css';
 import 'tailwindcss/utilities.css';
 
+
 import jQuery from 'jquery';
 
 crud.EventBus = new Vue();
@@ -46,17 +47,16 @@ window.app = new Vue({
 
         var _recursive = function (sindex,files,findex,callback) {
             that.loadResource(files[findex],function () {
-                console.log('_recursive',sindex,files[findex]);
-                let conf,lang,routes;
                 switch (sindex) {
                     case 0:
-                        that.$crud.lang = that.merge(that.$crud.lang,lang);
+                        that.$crud.lang = that.merge(that.$crud.lang,(__lang() || {}));
+                        //console.log('_recursive lang',sindex,files[findex],lang);
                         break;
                     case 1:
-                        that.$crud.routes = that.merge(that.$crud.routes,routes);
+                        that.$crud.routes = that.merge(that.$crud.routes,(__routes() || {}));
                         break;
                     case 2:
-                        that.$crud.conf = that.merge(that.$crud.conf,conf);
+                        that.$crud.conf = that.merge(that.$crud.conf,(__conf() || {}));
                         break;
                     default:
                         console.log('onno trovato',sindex);

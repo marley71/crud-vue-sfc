@@ -30,14 +30,14 @@ export default {
         // }
     },
     mounted: function () {
-        let that = this;
-        that.route = that._getRoute();
-        that.setRouteValues(that.route);
-        that.fetchData(that.route, function (json) {
-            that.fillData(that.route, json);
-            //that.keys = that.getKeys();
-            that.draw();
-        });
+        // let that = this;
+        // that.route = that._getRoute();
+        // that.setRouteValues(that.route);
+        // that.fetchData(that.route, function (json) {
+        //     that.fillData(that.route, json);
+        //     //that.keys = that.getKeys();
+        //     that.draw();
+        // });
     },
 
     beforeDestroy() {
@@ -137,6 +137,7 @@ export default {
                     } else {
                         dconf.label = that.$options.filters.translate(dconf.label);
                     }
+                    dconf.view = that;
                     //console.log(i,widgets,widgets[i],key,dconf),
                     widgets[i][key] = dconf;
 
@@ -333,14 +334,6 @@ export default {
                 that.reload();
             }, 100);
         },
-
-        // getTranslate: function (key) {
-        //     var that = this;
-        //     if (!that.widgets.length)
-        //         return '';
-        //     return that.widgets[0][key].label;
-        //
-        // }
     },
 }
 </script>

@@ -11,7 +11,8 @@ crud.conf['v-base'] = {
     langContext: '',
     loading: true,
     errorMsg: '',
-    routeConf: null
+    routeConf: null,
+    autoload : true,  // carica la sorgente dati automaticamente
 };
 
 export default {
@@ -28,19 +29,39 @@ export default {
         }
     },
     extends: cComponent,
+    mounted() {
+        var that = this;
+        that.route = that._getRoute();
+        if (that.autoload) {
+            that.load();
+        }
+    },
     methods: {
+        load() {
+            let that = this;
+            that.setRouteValues(that.route);
+            that.fetchData(that.route, function (json) {
+                that.json = json;
+                that.fillData(that.route, json);
+                that.afterLoadData(json);
+                that.draw();
+            });
+        },
+
         reload() {
             var that = this;
             that.loading = true;
             // non funziona il force update
             //that.$forceUpdate();
             setTimeout(function () {
-                that.setRouteValues(that.route);
-                that.fetchData(that.route, function (json) {
-                    that.fillData(that.route, json);
-                    that.draw();
-                    //that.loading = false;
-                });
+                that.load();
+
+                // that.setRouteValues(that.route);
+                // that.fetchData(that.route, function (json) {
+                //     that.fillData(that.route, json);
+                //     that.draw();
+                //     //that.loading = false;
+                // });
             },10)
 
         },
@@ -52,7 +73,7 @@ export default {
         fetchData: function (route, callback) {
             var that = this;
             if (!route) {
-                that.afterLoadData({});
+                //that.afterLoadData({});
                 callback({});
                 return;
             }
@@ -63,12 +84,12 @@ export default {
                     that.errorMsg = json.msg;
                     return
                 }
-                that.afterLoadData(json);
+                //that.afterLoadData(json);
                 callback(json);
             })
         },
 
-        afterLoadData: function (json) {
+        afterLoadData: function () {
 
         },
         _loadConf: function () {

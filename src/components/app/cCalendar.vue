@@ -1,17 +1,20 @@
 <template>
-    <c-loading v-if="loading" :error-msg="errorMsg"></c-loading>
-    <div v-else class="well model-calendar">
-        <div crud-hidden_fields></div>
-        <div crud-view_elements>
-            <div crud-calendar>
+    <div>
+        <c-loading v-show="loading" :error-msg="errorMsg"></c-loading>
+        <div v-show="!loading" class="well model-calendar">
+            <div crud-hidden_fields></div>
+            <div crud-view_elements>
+                <div crud-calendar>
+                </div>
             </div>
-        </div>
-        <div crud-view_action class="hide">
-            <div crud-field="data" crud-self>
+            <div crud-view_action class="hide">
+                <div crud-field="data" crud-self>
 
+                </div>
             </div>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -20,15 +23,26 @@ import vList from "../views/vList"
 import crud from "../../crud/confs"
 import Server from "../../crud/Server"
 
+
+
 crud.conf['c-calendar'] = {
     confParent: 'v-list',
     routeName : 'calendar',
     dateField : 'data',
     dateEndField : 'data_fine',
     resources : [
-        "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.css",
         "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js",
-        "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.js",
+        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js',
+
+
+        // "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.css",
+        //
+        // "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.js",
+
+
+
         //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.min.css",
         //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.js",
         //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.print.min.css",
@@ -38,8 +52,16 @@ crud.conf['c-calendar'] = {
         // 'fullcalendar-3.8.0/fullcalendar.js'
     ],
     calendarOptions : {
+        'headerToolbar' : {
+            start: 'title', // will normally be on the left. if RTL, will be on the right
+            center: '',
+            end: 'today prev,next' // will normally be on the right. if RTL, will be on the left
+        }
     },
     calendarContainer : null,
+    autoload : false,
+    startDate : null,
+    endDate : null,
 }
 
 crud.routes['calendar'] = {
@@ -58,74 +80,64 @@ export default {
     name: "c-calendar",
     extends : vList,
     methods : {
-        setRouteValues() {
+        afterLoadData() {
+            var that = this;
+            that.jQe().find('[crud-calendar]').fullCalendar('removeEvents');
+            that.loadEvents();
+        },
+        setRouteValues(route) {
             var that = this;
             if (route) {
                 route.setValues({
                     modelName: that.modelName
                 });
-                // setto il filtro data.
-                if (that.calendarContainer) {
-                   console.log(that.calendarContainer.fullCalendar('getView').intervalStart)
-
-                    //that.calendarContainer.fullCalendar('getView').intervalEnd
-                }
-                // console.log('setRouteValues', that);
-                // if (that.routeConf) {
-                //     var _conf = that._loadRouteConf() || {};
-                //     console.log('routeConf params', _conf);
-                //     var params = route.getParams();
-                //     var p2 = _conf.params || {};
-                //     for (var k in p2) {
-                //         params[k] = p2[k];
-                //     }
-                //     route.setParams(params);
-                // }
+                var params = route.getParams();
+                params['s_'+that.dateField+'[]'] = [that.startDate,that.endDate];
             }
             return route;
         },
         afterLoadResources() {
             var that = this;
-            //aspetto che i dati siano caricari
-            var __makeCalendar=function () {
-                if (!that.loading) {
-                    console.log('CALENDAR CONTAINER',that.jQe().find('[crud-calendar]').length);
-                    that.calendarOptions.dayClick= function (date, jsEvent, view){
-                        that.dayClick(date,jsEvent,view);
-                    }
-                    that.calendarOptions.eventClick = function (calEvent, jsEvent, view) {
-                        that.eventClick(calEvent, jsEvent, view);
-                    }
+            //that.loading = false;
 
-                    that.calendarOptions.eventAfterAllRender = function (view) {
-                        alert('aa')
-                    }
+            that.startDate = that.startDate? that.startDate : moment().format('YYYY-MM') + '-01 00:00';
+            that.endDate = that.endDate? that.endDate :  moment().format('YYYY-MM') +  '-' + moment().daysInMonth();
 
-                    that.jQe().find('[crud-calendar]').fullCalendar(that.calendarOptions);
-                    that.calendarContainer = that.jQe().find('[crud-calendar]');
-
-                    that.calendarContainer.find('.fc-next-button').click(function(){
-                        alert('aa');
-                        that.reload();
-                        //var month = $('#calendar').fullCalendar('getView').intervalStart.format('MM');
-
-                        //var year = $('#calendar').fullCalendar('getView').intervalEnd.format('YYYY');
-
-                    });
-
-
-
-                    that.loadEvents();
-                } else {
-                    setTimeout(__makeCalendar,100)
-                }
+            console.log('start,end',that.startDate,that.endDate);
+            that.calendarOptions.dayClick= function (date, jsEvent, view){
+                that.dayClick(date,jsEvent,view);
             }
-            __makeCalendar();
+            that.calendarOptions.eventClick = function (calEvent, jsEvent, view) {
+                that.eventClick(calEvent, jsEvent, view);
+            }
+
+            // that.calendarOptions.eventAfterAllRender = function (view) {
+            //
+            // }
+
+            that.jQe().find('[crud-calendar]').fullCalendar(that.calendarOptions);
+            that.calendarContainer = that.jQe().find('[crud-calendar]');
+
+            that.calendarContainer.find('.fc-next-button').click(function(){
+                var d = that.jQe().find('[crud-calendar]').fullCalendar('getView').intervalStart;
+                that.startDate = d.format('YYYY-MM') + '-01';
+                that.endDate = d.format('YYYY-MM') +  '-' + moment().daysInMonth();
+                that.reload();
+
+            });
+
+            that.calendarContainer.find('.fc-prev-button').click(function(){
+                var d = that.jQe().find('[crud-calendar]').fullCalendar('getView').intervalStart;
+                that.startDate = d.format('YYYY-MM') + '-01';
+                that.endDate = d.format('YYYY-MM') +  '-' + moment().daysInMonth();
+                that.reload();
+            });
+            that.load();
         } ,
         loadEvents: function () {
             var that = this;
+            console.log('loadEdvents',that.jQe().find('[crud-calendar]').length,this.value);
 
-            that.jQe().find('[crud-calendar]').fullCalendar('removeEvents');
             var events = [];
             //console.log(that.value);
             for (var i in that.value) {
@@ -178,8 +190,9 @@ export default {
                 events.push(ev);
 
             }
-            //console.info('aggiunti eventi ', events);
+            console.info('aggiunti eventi ', events);
             that.jQe().find('[crud-calendar]').fullCalendar('addEventSource', events);
+            //that.jQe().find('[crud-calendar]').fullCalendar('refresh');
         },
 
         dayClick: function (date, jsEvent, view) {
