@@ -33,30 +33,36 @@ crud.conf['c-calendar'] = {
     resources : [
         "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js",
         'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css',
-        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.css',
+        //'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.css',
         'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/it.min.js',
+
+        // "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.min.css",
+        // //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.print.min.css",
+        // "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.js",
+
+
 
 
         // "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.css",
-        //
         // "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.js",
 
 
 
-        //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.min.css",
-        //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.js",
-        //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/fullcalendar.print.min.css",
+
+
         //"https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.0/gcal.min.js",
         // 'fullcalendar-3.8.0/fullcalendar.css',
         // 'fullcalendar-3.8.0/lib/moment.min.js',
         // 'fullcalendar-3.8.0/fullcalendar.js'
     ],
     calendarOptions : {
-        'headerToolbar' : {
-            start: 'title', // will normally be on the left. if RTL, will be on the right
+        'header' : {
+            left: 'title', // will normally be on the left. if RTL, will be on the right
             center: '',
-            end: 'today prev,next' // will normally be on the right. if RTL, will be on the left
-        }
+            right: 'today prev,next' // will normally be on the right. if RTL, will be on the left
+        },
+        lang : 'it'
     },
     calendarContainer : null,
     autoload : false,
@@ -114,7 +120,7 @@ export default {
             // that.calendarOptions.eventAfterAllRender = function (view) {
             //
             // }
-
+            console.log('Creo calendario',that.calendarOptions)
             that.jQe().find('[crud-calendar]').fullCalendar(that.calendarOptions);
             that.calendarContainer = that.jQe().find('[crud-calendar]');
 

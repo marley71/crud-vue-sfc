@@ -28,28 +28,31 @@ import Server from "../../crud/Server";
 import crud from "../../crud/confs";
 
 crud.conf['w-swap'] = {
-    switchClass: 'form-switch-success',
-    dataSwitched: false,
-    toggleActive: false,
+    //switchClass: 'form-switch-success',
+    //dataSwitched: false,
+    //toggleActive: false,
     activeIcon: 'fa-check',
-    noIcon: 'fa-times',
+    //noIcon: 'fa-times',
     routeName: 'set',
-    iconClass: 'fa fa-circle',
+    //iconClass: 'fa fa-circle',
     title: "swap",
-    swapType: 'icon',  // possibili valori text,icon
-    bgInactive : 'bg-gray-300',
-    bgActive : 'bg-blue-400',
-    defaultDomainValues: {
-        icon: {
-            0: 'fa fa-circle text-danger',
-            1: 'fa fa-circle text-success'
-        },
-        text: {
-            0: 'app.no',
-            1: 'app.si'
-        }
+    //swapType: 'icon',  // possibili valori text,icon
+    bgInactive : 'bg-green-300',
+    bgActive : 'bg-red-400',
+    // defaultDomainValues: {
+    //     icon: {
+    //         0: 'fa fa-circle text-danger',
+    //         1: 'fa fa-circle text-success'
+    //     },
+    //     text: {
+    //         0: 'app.no',
+    //         1: 'app.si'
+    //     }
+    // },
+    domainValues: {
+        0: 'app.no',
+        1: 'app.si'
     },
-    domainValues: {},
     slot: '',
 };
 

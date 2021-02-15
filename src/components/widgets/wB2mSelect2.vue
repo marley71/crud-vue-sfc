@@ -3,15 +3,9 @@
         <div class="relative flex w-full flex-wrap items-stretch mb-3">
             <select type="text" c-select2 :placeholder="translate('app.digita-per-cercare')"
                     class="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pr-10"
-                    v-model="value" v-on:change="change"
-                    multiple="true"
+                    v-on:change="change"  v-model="value" multiple="true"
             />
         </div>
-
-<!--        <select c-select2 class="form-control m-select2" name="" multiple="true"-->
-<!--                v-model="value" v-on:change="change">-->
-
-<!--        </select>-->
         <div c-selected-items>
             <!-- hidden input for selected items -->
         </div>
@@ -22,21 +16,13 @@
 import wB2Select2 from "./wB2Select2";
 import crud from "../../crud/confs";
 
-crud.conf['w-b2-select2'] = {
-    labelFields: [],
-    resources: [
-        'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css',
-        'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js'
-    ],
-    routeName: 'autocomplete',
-    route: null,
-    primaryKey: 'id',
-    allowClear: true,
-    data: null,  // eventuali dati statici
+crud.conf['w-b2m-select2'] = {
+    confParent: 'w-b2-select2',
+    value: [],
 };
 
 export default {
-    name: "w-b2m-elect2",
+    name: "w-b2m-select2",
     extends: wB2Select2,
     methods: {
 
