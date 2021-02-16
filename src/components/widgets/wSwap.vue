@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-            <input v-on:click="swap" type="checkbox"  class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-            <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full  cursor-pointer"></label>
+        <div class="min-w-full relative block mr-2 align-middle select-none transition duration-200 ease-in">
+            <input v-on:change="swap" v-model="checkedValue" type="checkbox"  class="mr-2 toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+            <label for="toggle" class="mr-2 toggle-label absolute block overflow-hidden h-6 rounded-full  cursor-pointer">{{slot | translate}}</label>
         </div>
-        <label for="toggle" class="text-xs text-gray-700">{{slot | translate}}</label>
+<!--        <label for="toggle" class="text-xs text-color">{{slot | translate}}</label>-->
     </div>
 <!--    <div class="flex justify-between items-center px-6 py-2 whitespace-nowrap">-->
 <!--        <div-->
@@ -37,7 +37,7 @@ crud.conf['w-swap'] = {
     //iconClass: 'fa fa-circle',
     title: "swap",
     //swapType: 'icon',  // possibili valori text,icon
-    bgInactive : 'bg-green-300',
+    bgInactive : '#FF0000',
     bgActive : 'bg-red-400',
     // defaultDomainValues: {
     //     icon: {
@@ -54,6 +54,7 @@ crud.conf['w-swap'] = {
         1: 'app.si'
     },
     slot: '',
+    toggleActive :false,
 };
 
 export default {
@@ -61,40 +62,52 @@ export default {
     extends: wBase,
     mounted: function () {
         var that = this;
-        if (Object.keys(that.domainValues).length == 0) {
-            that.domainValues = that.defaultDomainValues[that.swapType];
-        }
+        // if (Object.keys(that.domainValues).length == 0) {
+        //     that.domainValues = that.defaultDomainValues[that.swapType];
+        // }
 
-        var keys = Object.keys(that.domainValues).map(String);
-        var _index = keys.indexOf("" + that.value);
-        if (_index >= 0) {
-            that.slot = that.domainValues["" + that.value];
-            if (_index == 0 )
-                that.toggleActive = false
-            else
-                that.toggleActive = true
-        } else {
-            that.slot = that.domainValues[keys[0]];
-        }
+        var index = that._getIndex();
+        that.toggleActive = index?true:false;
+        that.slot = that.domainValues[index];
+
+        // var keys = Object.keys(that.domainValues).map(String);
+        // var _index = keys.indexOf("" + that.value);
+        // if (_index >= 0) {
+        //     that.slot = that.domainValues["" + that.value];
+        //     if (_index == 0 )
+        //         that.toggleActive = false
+        //     else
+        //         that.toggleActive = true
+        // } else {
+        //     that.slot = that.domainValues[keys[0]];
+        // }
         //that.toggleActive = true;
         //console.log('domainValues',that.domainValues,that.slot)
     },
     computed : {
-        _getCurrent() {
-            var that = this;
-            var dV = that.getDV();
-            var keys = Object.keys(dV);
-            var value = that.value ? that.value : keys[0];
-            var vs = keys.map(String);
-            var index = vs.indexOf("" + value);
-            return keys[index];
+
+        cssVars() {
+            return {
+                '--bg-inactive': this.bgInactive,
+                '--bg-active': this.bgActive,
+            }
+        },
+        checkedValue: {
+            get() {
+                console.log('toggleActive',this.toggleActive)
+                return this.toggleActive
+            },
+            set(newValue) {
+                this.toggleActive = newValue;
+            }
         }
     },
     methods: {
         getDV: function () {
-            var that = this;
-            //console.log('swaptype',that.swapType,'domainValues',that.domainValues)
-            return (that.domainValues) ? that.domainValues : that.domainValues[that.swapType];
+            return (this.domainValues || {})
+            // var that = this;
+            // //console.log('swaptype',that.swapType,'domainValues',that.domainValues)
+            // return (that.domainValues) ? that.domainValues : that.domainValues[that.swapType];
         },
         setRouteValues: function (route) {
             var that = this;
@@ -131,7 +144,7 @@ export default {
                     that.errorDialog(json.msg);
                     return;
                 }
-                that.toggleActive = !that.toggleActive;
+                //that.toggleActive = !that.toggleActive;
 
                 that.value = key;
                 that.slot = dV[key];
@@ -150,15 +163,36 @@ export default {
          */
         _getNext() {
             var that = this;
+            // var dV = that.getDV();
+            // var keys = Object.keys(dV);
+            // var value = that.value ? that.value : keys[0];
+            // var vs = keys.map(String);
+            // var index = vs.indexOf("" + value);
+            var keys = Object.keys(that.getDV());
+            var index = this._getIndex();
+            index = (index + 1) % keys.length;
+            return keys[index];
+        },
+
+        _getIndex() {
+            var that = this;
             var dV = that.getDV();
             var keys = Object.keys(dV);
             var value = that.value ? that.value : keys[0];
             var vs = keys.map(String);
             var index = vs.indexOf("" + value);
-            index = (index + 1) % vs.length;
-            return keys[index];
+            return index;
         },
-
+        _getCurrent() {
+            // var that = this;
+            // var dV = that.getDV();
+            // var keys = Object.keys(dV);
+            // var value = that.value ? that.value : keys[0];
+            // var vs = keys.map(String);
+            // var index = vs.indexOf("" + value);
+            var keys = Object.keys(that.getDV());
+            return keys[this._getIndex()];
+        },
     }
 }
 </script>
@@ -168,19 +202,36 @@ export default {
 /* CHECKBOX TOGGLE SWITCH */
 /* @apply rules for documentation, these do not work as inline style */
 
-.toggle-checkbox {
-    @apply: right-0 border-green-400;
-    right: 0;
-    border-color: var(bgInactive);
-}
+/*.toggle-checkbox {*/
+/*    @apply: right-0 border-green-400;*/
+/*    right: 0;*/
+/*    border-color: var(--bg-inactive,blue);*/
+/*}*/
 
 .toggle-checkbox:checked {
-    @apply: right-0 border-green-400;
+    @apply: right-0 border-green-400 bg-green-400;
     right: 0;
-    border-color: var(bgActive);
+    /*border-color: var(--bg-active,red);*/
 }
 .toggle-checkbox:checked + .toggle-label {
     @apply: var(bgActive);
-    background-color: var(bgActive);
+    right:auto;
+    /*background-color: var(--bg-active,red);*/
+}
+
+.toggle-checkbox:not(checked) {
+    @apply: right-0 border-green-400;
+    /*right: 0;*/
+    /*border-color: var(--bg-active,blue);*/
+}
+
+.toggle-checkbox:not(checked) + .toggle-label {
+    @apply: var(bgActive);
+    right : 0;
+    /*background-color: var(--bg-active,blue);*/
+}
+
+.text-color {
+    color : var(--bg-active,red)
 }
 </style>

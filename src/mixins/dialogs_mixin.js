@@ -1,8 +1,5 @@
-import core_mixin from "./core_mixin";
-import crud from "../crud/confs";
-import jQuery from "jquery";
-import dConfirm from "../components/dialogs/dConfirm";
 
+import jQuery from "jquery";
 
 var dialogs_mixin = {
     methods : {
